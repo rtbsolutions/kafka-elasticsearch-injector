@@ -136,7 +136,13 @@ func (k *kafka) worker(consumer *cluster.Consumer, buffSize int, notifications c
 	var decoded []*models.Record
 	idx := 0
 	for {
+		level.Info(k.consumer.Logger).Log(
+			"message", "will consume message",
+		)
 		kafkaMsg := <-k.consumerCh
+		level.Info(k.consumer.Logger).Log(
+			"message", "consumed message",
+		)
 		buf[idx] = kafkaMsg
 		idx++
 		for idx == buffSize {
